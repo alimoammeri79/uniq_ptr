@@ -10,7 +10,7 @@
 
 namespace ali {
     template<class T> class unique_ptr {
-        friend std::ostream& operator<<(std::ostream&, const unique_ptr&);
+        friend std::ostream& operator<<(std::ostream&, const unique_ptr<T>&);
     public:
         unique_ptr() noexcept= default;
         explicit unique_ptr(std::nullptr_t nptr) noexcept: _pointer{nptr} {}
@@ -55,7 +55,7 @@ namespace ali {
 
     // Specialization for arrays:
     template <class T> class unique_ptr<T[]> {
-        friend std::ostream& operator<<(std::ostream&, const unique_ptr&);
+        friend std::ostream& operator<<(std::ostream&, const unique_ptr<T[]>&);
     public:
         unique_ptr() noexcept= default;
         explicit unique_ptr(std::nullptr_t nptr) noexcept: _pointer{nptr} {}
