@@ -10,13 +10,13 @@
 
 namespace ali {
     template<class T> class unique_ptr {
-        friend std::ostream& operator<<(std::ostream&, const unique_ptr<T>&);
+        friend std::ostream& operator<<(std::ostream&, const unique_ptr&);
     public:
         unique_ptr() noexcept= default;
         explicit unique_ptr(std::nullptr_t nptr) noexcept: _pointer{nptr} {}
         explicit unique_ptr(T* pointer) noexcept : _pointer{pointer} {}
-        unique_ptr(const unique_ptr<T>&) noexcept= delete;
-        unique_ptr(unique_ptr<T>&& other) noexcept : _pointer {other.release()}{};
+        unique_ptr(const unique_ptr&) noexcept= delete;
+        unique_ptr(unique_ptr&& other) noexcept : _pointer {other.release()}{};
         ~unique_ptr() { delete _pointer; }
 
         T* get() const noexcept { return _pointer; }
@@ -33,18 +33,18 @@ namespace ali {
             delete _pointer;
             _pointer = nptr;
         }
-        void swap(unique_ptr<T>& other) { std::swap(_pointer, other._pointer); }
-        unique_ptr& operator=(unique_ptr<T>&& other) noexcept {
+        void swap(unique_ptr& other) { std::swap(_pointer, other._pointer); }
+        unique_ptr& operator=(unique_ptr&& other) noexcept {
             reset(other.release());
             return *this;
         }
-        unique_ptr& operator=(const unique_ptr<T>&) noexcept = delete;
-        bool operator==(const unique_ptr<T>& other) const noexcept { return get() == other.get(); }
-        bool operator!=(const unique_ptr<T>& other) const noexcept { return get() != other.get(); }
-        bool operator<(const unique_ptr<T>& other) const noexcept { return get() < other.get(); }
-        bool operator>(const unique_ptr<T>& other) const noexcept { return get() > other.get(); }
-        bool operator<=(const unique_ptr<T>& other) const noexcept { return get() <= other.get(); }
-        bool operator>=(const unique_ptr<T>& other) const noexcept { return get() >= other.get(); }
+        unique_ptr& operator=(const unique_ptr&) noexcept = delete;
+        bool operator==(const unique_ptr& other) const noexcept { return get() == other.get(); }
+        bool operator!=(const unique_ptr& other) const noexcept { return get() != other.get(); }
+        bool operator<(const unique_ptr& other) const noexcept { return get() < other.get(); }
+        bool operator>(const unique_ptr& other) const noexcept { return get() > other.get(); }
+        bool operator<=(const unique_ptr& other) const noexcept { return get() <= other.get(); }
+        bool operator>=(const unique_ptr& other) const noexcept { return get() >= other.get(); }
         explicit operator bool() const noexcept { return _pointer != nullptr; }
         T& operator*() { return *get(); }
         T* operator->() { return get(); }
@@ -55,13 +55,13 @@ namespace ali {
 
     // Specialization for arrays:
     template <class T> class unique_ptr<T[]> {
-        friend std::ostream& operator<<(std::ostream&, const unique_ptr<T>&);
+        friend std::ostream& operator<<(std::ostream&, const unique_ptr&);
     public:
         unique_ptr() noexcept= default;
         explicit unique_ptr(std::nullptr_t nptr) noexcept: _pointer{nptr} {}
         explicit unique_ptr(T pointer[]) noexcept : _pointer{pointer} {}
-        unique_ptr(const unique_ptr<T>&) noexcept= delete;
-        unique_ptr(unique_ptr<T>&& other) noexcept : _pointer {other.release()}{};
+        unique_ptr(const unique_ptr&) noexcept= delete;
+        unique_ptr(unique_ptr&& other) noexcept : _pointer {other.release()}{};
         ~unique_ptr() { delete[] _pointer; }
 
         T* get() const noexcept { return _pointer; }
@@ -78,19 +78,19 @@ namespace ali {
             delete _pointer;
             _pointer = nptr;
         }
-        void swap(unique_ptr<T>& other) { std::swap(_pointer, other._pointer); }
-        unique_ptr& operator=(unique_ptr<T>&& other) noexcept {
+        void swap(unique_ptr& other) { std::swap(_pointer, other._pointer); }
+        unique_ptr& operator=(unique_ptr&& other) noexcept {
             reset(other.release());
             return *this;
         }
 
-        unique_ptr& operator=(const unique_ptr<T>&) noexcept = delete;
-        bool operator==(const unique_ptr<T>& other) const noexcept { return get() == other.get(); }
-        bool operator!=(const unique_ptr<T>& other) const noexcept { return get() == other.get(); }
-        bool operator<(const unique_ptr<T>& other) const noexcept { return get() < other.get(); }
-        bool operator>(const unique_ptr<T>& other) const noexcept { return get() > other.get(); }
-        bool operator<=(const unique_ptr<T>& other) const noexcept { return get() <= other.get(); }
-        bool operator>=(const unique_ptr<T>& other) const noexcept { return get() >= other.get(); }
+        unique_ptr& operator=(const unique_ptr&) noexcept = delete;
+        bool operator==(const unique_ptr& other) const noexcept { return get() == other.get(); }
+        bool operator!=(const unique_ptr& other) const noexcept { return get() == other.get(); }
+        bool operator<(const unique_ptr& other) const noexcept { return get() < other.get(); }
+        bool operator>(const unique_ptr& other) const noexcept { return get() > other.get(); }
+        bool operator<=(const unique_ptr& other) const noexcept { return get() <= other.get(); }
+        bool operator>=(const unique_ptr& other) const noexcept { return get() >= other.get(); }
         explicit operator bool() const noexcept { return _pointer != nullptr; }
         T& operator*() { return *get(); }
         T* operator->() { return get(); }
