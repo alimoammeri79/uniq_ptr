@@ -2,7 +2,7 @@
 
 A minimal implementation of std::uniq_ptr.
 
-# How to test?
+## How to test?
 
 You can use bazel:
 <div>

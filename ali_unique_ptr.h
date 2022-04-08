@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cctype>
+#include <compare>
 
 namespace ali {
     template<class T> class unique_ptr {
@@ -39,12 +40,7 @@ namespace ali {
             return *this;
         }
         unique_ptr& operator=(const unique_ptr&) noexcept = delete;
-        bool operator==(const unique_ptr& other) const noexcept { return get() == other.get(); }
-        bool operator!=(const unique_ptr& other) const noexcept { return get() != other.get(); }
-        bool operator<(const unique_ptr& other) const noexcept { return get() < other.get(); }
-        bool operator>(const unique_ptr& other) const noexcept { return get() > other.get(); }
-        bool operator<=(const unique_ptr& other) const noexcept { return get() <= other.get(); }
-        bool operator>=(const unique_ptr& other) const noexcept { return get() >= other.get(); }
+        auto operator<=>(const unique_ptr& rhs) const = default;
         explicit operator bool() const noexcept { return _pointer != nullptr; }
         T& operator*() { return *get(); }
         T* operator->() { return get(); }
@@ -85,12 +81,7 @@ namespace ali {
         }
 
         unique_ptr& operator=(const unique_ptr&) noexcept = delete;
-        bool operator==(const unique_ptr& other) const noexcept { return get() == other.get(); }
-        bool operator!=(const unique_ptr& other) const noexcept { return get() == other.get(); }
-        bool operator<(const unique_ptr& other) const noexcept { return get() < other.get(); }
-        bool operator>(const unique_ptr& other) const noexcept { return get() > other.get(); }
-        bool operator<=(const unique_ptr& other) const noexcept { return get() <= other.get(); }
-        bool operator>=(const unique_ptr& other) const noexcept { return get() >= other.get(); }
+        auto operator<=>(const unique_ptr& rhs) const = default;
         explicit operator bool() const noexcept { return _pointer != nullptr; }
         T& operator*() { return *get(); }
         T* operator->() { return get(); }
